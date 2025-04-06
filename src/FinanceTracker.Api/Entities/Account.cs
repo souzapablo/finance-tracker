@@ -12,4 +12,5 @@ public class Account(string name) : Entity
     public IEnumerable<Transaction> Transactions { get; set; } = [];
     public IEnumerable<Subscription> Subscriptions { get; private set; } = [];
     public IEnumerable<Installment> Installments { get; private set; } = [];
+    public IEnumerable<Budget> Budgets { get; private set;} = [];
 }
