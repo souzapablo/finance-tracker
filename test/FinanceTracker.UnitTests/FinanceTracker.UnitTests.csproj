@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FinanceTracker.Api\FinanceTracker.Api.csproj" />
+  </ItemGroup>
+
 </Project>
