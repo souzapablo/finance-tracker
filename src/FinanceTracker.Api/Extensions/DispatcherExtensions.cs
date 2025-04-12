@@ -4,12 +4,13 @@ namespace FinanceTracker.Api.Extensions;
 
 public static class DispatcherExtensions
 {
-    public static void RegisterDispatchers(this WebApplicationBuilder builder)
+    public static IServiceCollection RegisterDispatchers(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
-        builder.Services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+        builder.Services.AddScoped<ICommandDispatcher, CommandDispatcher>();
+        builder.Services.AddScoped<IQueryDispatcher, QueryDispatcher>();
         RegisterCommands(builder);
         RegisterQueryHandlers(builder);
+        return builder.Services;
     }
 
     private static void RegisterQueryHandlers(WebApplicationBuilder builder)
@@ -21,7 +22,7 @@ public static class DispatcherExtensions
             foreach (var interfaceType in type.GetInterfaces()
                 .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)))
             {
-                builder.Services.AddSingleton(interfaceType, type);
+                builder.Services.AddScoped(interfaceType, type);
             }
         }
     }
@@ -35,7 +36,7 @@ public static class DispatcherExtensions
             foreach (var interfaceType in type.GetInterfaces()
                 .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)))
             {
-                builder.Services.AddSingleton(interfaceType, type);
+                builder.Services.AddScoped(interfaceType, type);
             }
         }
     }

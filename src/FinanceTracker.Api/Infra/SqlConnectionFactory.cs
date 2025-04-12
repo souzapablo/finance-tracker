@@ -1,5 +1,5 @@
 using FinanceTracker.Api.Infra.Contracts;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace FinanceTracker.Api.Infra;
 
@@ -9,6 +9,6 @@ public class SqlConnectionFactory(IConfiguration configuration) : ISqlConnection
         configuration.GetConnectionString("Postgres") ??
         throw new InvalidOperationException("Connection string 'Postgres' not found.");
 
-    public SqlConnection CreateConnection() =>
+    public NpgsqlConnection CreateConnection() =>
         new(_connectionString);
 }

@@ -1,9 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Npgsql;
 
-namespace FinanceTracker.Api.Infra.Contracts
+namespace FinanceTracker.Api.Infra.Contracts;
+
+public interface ISqlConnectionFactory
 {
-    public interface ISqlConnectionFactory
-    {
-        SqlConnection CreateConnection();
-    }
+    NpgsqlConnection CreateConnection();
 }

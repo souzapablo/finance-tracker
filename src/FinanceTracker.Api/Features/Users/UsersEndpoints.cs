@@ -1,5 +1,4 @@
 ﻿using FinanceTracker.Api.Common.Base;
-using FinanceTracker.Api.Features.Users.Create;
 
 namespace FinanceTracker.Api.Features.Users;
 

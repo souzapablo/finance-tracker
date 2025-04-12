@@ -3,7 +3,10 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.RegisterDispatchers();
+var configuration = builder.Configuration;
+
+builder.RegisterDispatchers()
+    .RegisterServices();
 
 builder.Services.AddEndpointsApiExplorer();
 
