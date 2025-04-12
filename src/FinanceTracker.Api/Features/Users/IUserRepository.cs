@@ -1,6 +1,4 @@
-﻿using FinanceTracker.Api.Entities;
-
-namespace FinanceTracker.Api.Features.Users;
+﻿namespace FinanceTracker.Api.Features.Users;
 
 public interface IUserRepository
 {

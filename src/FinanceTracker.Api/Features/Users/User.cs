@@ -1,6 +1,8 @@
 ﻿using FinanceTracker.Api.Common.Base;
+using FinanceTracker.Api.Entities;
+using FinanceTracker.Api.Features.Accounts;
 
-namespace FinanceTracker.Api.Entities;
+namespace FinanceTracker.Api.Features.Users;
 
 public class User(
     string username, 

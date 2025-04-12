@@ -1,6 +1,5 @@
 ﻿using FinanceTracker.Api.Common.Base;
 using FinanceTracker.Api.Common.Dispatcher;
-using FinanceTracker.Api.Entities;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
 
 namespace FinanceTracker.Api.Features.Users;

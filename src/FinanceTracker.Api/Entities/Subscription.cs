@@ -1,4 +1,5 @@
 ﻿using FinanceTracker.Api.Common.Base;
+using FinanceTracker.Api.Features.Accounts;
 
 namespace FinanceTracker.Api.Entities;
 

@@ -10,7 +10,10 @@ builder.RegisterDispatchers()
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.FullName);
+});
 
 var app = builder.Build();
 

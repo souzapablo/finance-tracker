@@ -1,4 +1,5 @@
-﻿using FinanceTracker.Api.Features.Users;
+﻿using FinanceTracker.Api.Features.Accounts;
+using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Infra;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
 using FinanceTracker.Api.Infra.Contracts;
@@ -33,6 +34,7 @@ public static class ServiceExtensions
         services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
 
         return services;
     }

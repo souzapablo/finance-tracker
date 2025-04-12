@@ -1,5 +1,6 @@
 ﻿using FinanceTracker.Api.Common.Base;
 using FinanceTracker.Api.Enums;
+using FinanceTracker.Api.Features.Users;
 
 namespace FinanceTracker.Api.Entities;
 

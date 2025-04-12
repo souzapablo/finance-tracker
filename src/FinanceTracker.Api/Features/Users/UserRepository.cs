@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using FinanceTracker.Api.Entities;
 using FinanceTracker.Api.Infra.Contracts;
 
 namespace FinanceTracker.Api.Features.Users;

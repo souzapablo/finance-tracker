@@ -1,5 +1,4 @@
 ﻿using FinanceTracker.Api.Common.Base;
-using FinanceTracker.Api.Entities;
 using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
 using NSubstitute;

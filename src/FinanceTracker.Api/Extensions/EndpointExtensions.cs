@@ -1,4 +1,5 @@
-﻿using FinanceTracker.Api.Features.Users;
+﻿using FinanceTracker.Api.Features.Accounts;
+using FinanceTracker.Api.Features.Users;
 
 namespace FinanceTracker.Api.Extensions;
 
@@ -8,5 +9,6 @@ public static class EndpointExtensions
     {
         app.MapGet("/", () => "Hello World!");
         app.MapUsersEndpoints();
+        app.MapAccountEndpoints();
     }
 }
