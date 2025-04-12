@@ -1,11 +1,8 @@
 ﻿namespace FinanceTracker.Api.Common.Dispatcher;
 
-public class CommandDispatcher : ICommandDispatcher
+public class CommandDispatcher(IServiceProvider serviceProvider) : ICommandDispatcher
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public CommandDispatcher(IServiceProvider serviceProvider) =>
-        _serviceProvider = serviceProvider;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public Task<TCommandResult> Dispatch<TCommand, TCommandResult>(TCommand command, CancellationToken cancellation)
     {

@@ -1,11 +1,8 @@
 ﻿namespace FinanceTracker.Api.Common.Dispatcher;
 
-public class QueryDispatcher : IQueryDispatcher
+public class QueryDispatcher(IServiceProvider serviceProvider) : IQueryDispatcher
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public QueryDispatcher(IServiceProvider serviceProvider) =>
-        _serviceProvider = serviceProvider;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public Task<TQueryResult> Dispatch<TQuery, TQueryResult>(TQuery query, CancellationToken cancellation)
     {
