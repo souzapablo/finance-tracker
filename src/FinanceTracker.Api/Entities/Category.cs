@@ -1,5 +1,5 @@
-﻿using FinanceTracker.Api.Enums;
-using FinanceTracker.Api.Shared;
+﻿using FinanceTracker.Api.Common.Base;
+using FinanceTracker.Api.Enums;
 
 namespace FinanceTracker.Api.Entities;
 
