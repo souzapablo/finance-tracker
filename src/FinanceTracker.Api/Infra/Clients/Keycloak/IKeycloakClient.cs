@@ -5,5 +5,5 @@ namespace FinanceTracker.Api.Infra.Clients.Keycloak;
 
 public interface IKeycloakClient
 {
-    Task<Result<string>> CreateUserAsync(Request command, CancellationToken cancellationToken);
+    Task<Result<string>> CreateUserAsync(Request command, long userId, CancellationToken cancellationToken);
 }

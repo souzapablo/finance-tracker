@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using FinanceTracker.Api.Infra.Clients.Keycloak.Dtos;
 using Microsoft.Extensions.Options;
 using FinanceTracker.Api.Features.Users;
+using System.Threading;
 
 namespace FinanceTracker.Api.Infra.Clients.Keycloak;
 
@@ -13,7 +14,7 @@ public class KeycloakClient(
     IOptions<KeycloakOptions> options) : IKeycloakClient
 {
     private readonly KeycloakOptions _options = options.Value;
-    public async Task<Result<string>> CreateUserAsync(Request request, CancellationToken cancellationToken)
+    public async Task<Result<string>> CreateUserAsync(Request request, long userId, CancellationToken cancellationToken)
     {
         var user = new KeycloakUser
         {
@@ -21,7 +22,11 @@ public class KeycloakClient(
             Username = request.Username,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            Credentials = [ new() { Value = request.Password }]
+            Credentials = [ new() { Value = request.Password }],
+            Attributes = new Dictionary<string, string[]>
+            {
+                { "app_user_id", new[] { userId.ToString() } }
+            }
         };
 
         await GetToken(cancellationToken);
@@ -38,13 +43,13 @@ public class KeycloakClient(
             var error = await response.Content.ReadFromJsonAsync<KeycloakError>(cancellationToken);
             return Result<string>.Failure(Error.ExternalError(error?.Message!));
         }
-        string userId = string.Empty;
+        string externalId = string.Empty;
         if (response.Headers.Location is not null)
         {
-            userId = response.Headers.Location.Segments.Last().Trim('/');
+            externalId = response.Headers.Location.Segments.Last().Trim('/');
         }
 
-        return Result<string>.Success(userId);
+        return Result<string>.Success(externalId);
     }
 
     private async Task GetToken(CancellationToken cancellationToken)

@@ -1,9 +1,17 @@
 ﻿using FinanceTracker.Api.Common.Base;
 using FinanceTracker.Api.Common.Dispatcher;
+using FinanceTracker.Api.Extensions;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 namespace FinanceTracker.Api.Features.Accounts;
 
-public record Request(string Name, long UserId);
+public class Request
+{
+    [JsonIgnore]
+    public long UserId { get; set; }
+    public string Name { get; set; } = string.Empty;
+};
 
 public class CreateAccountCommand(
     IAccountRepository repository) : ICommandHandler<Request, Result<long>>
@@ -30,8 +38,10 @@ public class CreateAccountEndpoint : IEndpoint
     public static async Task<IResult> HandleAsync(
         Request request,
         ICommandDispatcher dispatcher,
+        ClaimsPrincipal claims,
         CancellationToken cancellationToken)
     {
+        request.UserId = claims.GetUserId();
         var result = await dispatcher.Dispatch<Request, Result<long>>(request, cancellationToken);
 
         if (!result.IsSuccess)

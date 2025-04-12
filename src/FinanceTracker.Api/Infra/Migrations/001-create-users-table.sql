@@ -1,6 +1,6 @@
 ﻿CREATE TABLE users (
     id BIGSERIAL,
-    external_id TEXT NOT NULL UNIQUE,
+    external_id TEXT UNIQUE,
     username TEXT NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,

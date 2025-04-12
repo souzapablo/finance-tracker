@@ -20,7 +20,7 @@ public class CreateUserTests
         _userRepository.InsertAsync(Arg.Any<User>(), CancellationToken.None)
             .Returns(1);
 
-        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), CancellationToken.None)
+        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<long>(), CancellationToken.None)
             .Returns(Result<string>.Success(Guid.NewGuid().ToString()));
 
         // Act
@@ -38,7 +38,7 @@ public class CreateUserTests
 
         var command = new CreateUserCommand(_keycloakClient, _userRepository);
 
-        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), CancellationToken.None)
+        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<long>(), CancellationToken.None)
             .Returns(Result<string>.Failure(Error.ExternalError("External error message")));
 
         // Act

@@ -8,6 +8,7 @@ public static class AccountEndpoints
     {
         app.MapGroup("api/v1/accounts")
              .WithTags("Accounts")
+             .RequireAuthorization()
              .MapEndpoint<CreateAccountEndpoint>();
     }
 

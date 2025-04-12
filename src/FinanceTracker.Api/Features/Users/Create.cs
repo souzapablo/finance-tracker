@@ -11,14 +11,18 @@ public class CreateUserCommand(
 {
     public async Task<Result<long>> Handle(Request command, CancellationToken cancellation)
     {
-        var result = await keycloakClient.CreateUserAsync(command, cancellation);
+        var user = new User(command.Username, command.Email, command.FirstName, command.LastName);
+
+        var userId = await repository.InsertAsync(user, cancellation);
+
+        var result = await keycloakClient.CreateUserAsync(command, userId, cancellation);
 
         if (!result.IsSuccess)
             return Result<long>.Failure(result.Error!);
 
-        var user = new User(command.Username, command.Email, result.Data, command.FirstName, command.LastName);
+        user.SetExternalId(result.Data);
 
-        var userId = await repository.InsertAsync(user, cancellation);
+        await repository.UpdateExternalId(user, userId, cancellation);
 
         return Result<long>.Success(userId);
     }

@@ -24,6 +24,9 @@ public class KeycloakUser
 
     [JsonPropertyName("enabled")]
     public bool Enabled { get; set; } = true;
+
+    [JsonPropertyName("attributes")]
+    public Dictionary<string, string[]> Attributes { get; set; } = [];
 }
 
 public class Credential 

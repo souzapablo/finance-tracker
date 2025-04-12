@@ -10,7 +10,12 @@ public class CreateAccountTests
     public async Task ShouldCreateAccount_WhenInputIsValid()
     {
         // Arrange
-        var request = new Request("Teste", 1L);
+        var request = new Request
+        {
+            UserId = 1L,
+            Name = "Account"
+        };
+
         var command = new CreateAccountCommand(_accountRepository);
 
         _accountRepository.InsertAsync(Arg.Any<Account>(), CancellationToken.None)

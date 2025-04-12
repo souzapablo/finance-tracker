@@ -1,4 +1,6 @@
 using FinanceTracker.Api.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,14 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.RegisterDispatchers()
-    .RegisterServices();
+    .RegisterServices(configuration);
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.Audience = configuration["Authentication:ValidAudience"];
+        options.MetadataAddress = configuration["Authentication:MetadataAddress"]!;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = configuration["Authentication:ValidIssuer"]
+        };
+    });
 
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.CustomSchemaIds(type => type.FullName);
-});
 
 var app = builder.Build();
 
@@ -27,5 +38,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapEndpoints();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.Run();
