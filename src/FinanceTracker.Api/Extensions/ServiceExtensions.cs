@@ -3,6 +3,8 @@ using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Infra;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
 using FinanceTracker.Api.Infra.Contracts;
+using FinanceTracker.Api.Infra.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -13,8 +15,10 @@ public static class ServiceExtensions
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.RegisterClients()
-            .RegisterRepositories()
+            .RegisterRepositories(configuration)
             .RegisterDocumentation(configuration);
+
+
 
         return services;
     }
@@ -31,8 +35,15 @@ public static class ServiceExtensions
         return services;
     }
 
-    private static IServiceCollection RegisterRepositories(this IServiceCollection services)
+    private static IServiceCollection RegisterRepositories(this IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString("Postgres");
+        services.AddDbContext<FinanceTrackerDbContext>(cfg =>
+        {
+            cfg.UseNpgsql(connectionString)
+                .UseSnakeCaseNamingConvention();
+        });
+
         services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
         services.AddScoped<IUserRepository, UserRepository>();
