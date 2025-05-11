@@ -10,7 +10,7 @@ public class Category(
     string icon,
     CategoryType type) : Entity
 {
-    public long UserId { get; private set; }
+    public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
     public string Name { get; private set; } = name;
     public string Color { get; private set; } = color;

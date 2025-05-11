@@ -7,7 +7,7 @@ public class EntityTests
     public void ShouldSetIsDeletedToTrue_WhenDeleted()
     {
         // Arrange
-        var sut = new Account("Test Account", 1L);
+        var sut = new Account("Test Account", Guid.NewGuid());
 
         // Act
         sut.Delete();
@@ -20,7 +20,7 @@ public class EntityTests
     public void ShouldChangeLastUpdate_WhenUpdated()
     {
         // Arrange
-        var sut = new Account("Test Account", 1L);
+        var sut = new Account("Test Account", Guid.NewGuid());
         var initialDate = sut.LastUpdate;
 
         // Act

@@ -11,7 +11,7 @@ public class Card(
     int closingDay,
     int dueDay) : Entity
 {
-    public long AccountId { get; private set; }
+    public Guid AccountId { get; private set; }
     public Account Account { get; private set; } = null!;
     public string Name { get; private set; } = name;
     public CardBrand Brand { get; private set; } = brand;

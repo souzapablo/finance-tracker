@@ -3,9 +3,9 @@ using FinanceTracker.Api.Entities;
 
 namespace FinanceTracker.Api.Features.Accounts;
 
-public class Account(string name, long userId) : Entity
+public class Account(string name, Guid userId) : Entity
 {
-    public long UserId { get; private set; } = userId;
+    public Guid UserId { get; private set; } = userId;
     public string Name { get; private set; } = name;
     public decimal Balance { get; private set; }
     public IEnumerable<Card> Cards { get; private set; } = [];

@@ -1,6 +1,7 @@
 ﻿using FinanceTracker.Api.Common.Base;
 using FinanceTracker.Api.Common.Dispatcher;
 using FinanceTracker.Api.Extensions;
+using FinanceTracker.Api.Infra.Data;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
@@ -9,20 +10,22 @@ namespace FinanceTracker.Api.Features.Accounts;
 public class Request
 {
     [JsonIgnore]
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
     public string Name { get; set; } = string.Empty;
 };
 
 public class CreateAccountCommand(
-    IAccountRepository repository) : ICommandHandler<Request, Result<long>>
+    IAccountRepository repository,
+    IUnitOfWork unitOfWork) : ICommandHandler<Request, Result<Guid>>
 {
-    public async Task<Result<long>> Handle(Request command, CancellationToken cancellation)
+    public async Task<Result<Guid>> Handle(Request command, CancellationToken cancellation)
     {
         var account = new Account(command.Name, command.UserId);
 
-        var accountId = await repository.InsertAsync(account, cancellation);
+        repository.Add(account);
+        await unitOfWork.CommitAsync(cancellation);
 
-        return Result<long>.Success(accountId);
+        return Result<Guid>.Success(account.Id);
     }
 }
 
@@ -32,7 +35,7 @@ public class CreateAccountEndpoint : IEndpoint
         app.MapPost("", HandleAsync)
             .WithName("Create account")
             .WithDescription("Create a new account in the user wallet")
-            .Produces<Result<long>>(StatusCodes.Status201Created)
+            .Produces<Result<Guid>>(StatusCodes.Status201Created)
             .Produces<Error>(StatusCodes.Status400BadRequest);
 
     public static async Task<IResult> HandleAsync(
@@ -42,7 +45,7 @@ public class CreateAccountEndpoint : IEndpoint
         CancellationToken cancellationToken)
     {
         request.UserId = claims.GetUserId();
-        var result = await dispatcher.Dispatch<Request, Result<long>>(request, cancellationToken);
+        var result = await dispatcher.Dispatch<Request, Result<Guid>>(request, cancellationToken);
 
         if (!result.IsSuccess)
             return Results.BadRequest(result.Error);
