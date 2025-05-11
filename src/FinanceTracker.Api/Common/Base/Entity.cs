@@ -1,4 +1,4 @@
-﻿namespace FinanceTracker.Api.Shared;
+﻿namespace FinanceTracker.Api.Common.Base;
 
 public abstract class Entity
 {

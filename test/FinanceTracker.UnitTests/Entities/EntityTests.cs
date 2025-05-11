@@ -1,4 +1,4 @@
-﻿using FinanceTracker.Api.Entities;
+﻿using FinanceTracker.Api.Features.Accounts;
 
 namespace FinanceTracker.UnitTests.Entities;
 public class EntityTests
@@ -7,7 +7,7 @@ public class EntityTests
     public void ShouldSetIsDeletedToTrue_WhenDeleted()
     {
         // Arrange
-        var sut = new Account("Test Account");
+        var sut = new Account("Test Account", 1L);
 
         // Act
         sut.Delete();
@@ -20,7 +20,7 @@ public class EntityTests
     public void ShouldChangeLastUpdate_WhenUpdated()
     {
         // Arrange
-        var sut = new Account("Test Account");
+        var sut = new Account("Test Account", 1L);
         var initialDate = sut.LastUpdate;
 
         // Act
