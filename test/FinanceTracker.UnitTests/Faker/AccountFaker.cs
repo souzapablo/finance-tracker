@@ -11,4 +11,12 @@ internal class AccountFaker
             id ?? Guid.NewGuid()
         ))
         .Generate();
+
+    public static IEnumerable<Account> Generate(Guid? id, int count = 2) =>
+        new Faker<Account>("pt_BR")
+        .CustomInstantiator(f => new Account(
+            f.Company.CompanyName(),
+            id ?? Guid.NewGuid()
+        ))
+        .Generate(count);
 }

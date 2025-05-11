@@ -1,4 +1,5 @@
 ﻿using FinanceTracker.Api.Features.Accounts;
+using FinanceTracker.Api.Features.Accounts.Create;
 using FinanceTracker.Api.Infra.Data;
 using NSubstitute;
 
@@ -8,7 +9,7 @@ public class CreateAccountTests
     private readonly IAccountRepository _accountRepository = Substitute.For<IAccountRepository>();
     private readonly IUnitOfWork _unitOfWork = Substitute.For<IUnitOfWork>();
 
-    [Fact]
+    [Fact(DisplayName = "Create a new account")]
     public async Task ShouldCreateAccount_WhenInputIsValid()
     {
         // Arrange
