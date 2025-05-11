@@ -5,7 +5,6 @@ using System.Net.Http.Headers;
 using FinanceTracker.Api.Infra.Clients.Keycloak.Dtos;
 using Microsoft.Extensions.Options;
 using FinanceTracker.Api.Features.Users;
-using System.Threading;
 
 namespace FinanceTracker.Api.Infra.Clients.Keycloak;
 

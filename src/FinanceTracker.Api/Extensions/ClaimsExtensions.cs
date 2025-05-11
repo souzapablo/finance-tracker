@@ -1,5 +1,4 @@
-﻿using FinanceTracker.Api.Features.Users;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace FinanceTracker.Api.Extensions;
 
