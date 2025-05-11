@@ -8,7 +8,10 @@ public static class ClaimsExtensions
     {
         var appUserId = claims.FindFirst("app_user_id")?.Value;
 
-        _ = long.TryParse(appUserId, out var userId);
+        if (!long.TryParse(appUserId, out var userId))
+        {
+            throw new InvalidOperationException("Invalid or missing 'app_user_id' claim.");
+        }
 
         return userId;
     }
