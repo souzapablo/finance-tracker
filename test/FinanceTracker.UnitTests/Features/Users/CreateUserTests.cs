@@ -47,4 +47,22 @@ public class CreateUserTests
         // Assert
         Assert.Equal("EXTERNAL", result.Error?.Code);
     }
+
+    [Fact(DisplayName = "Return error when user is already registered")]
+    public async Task ShouldReturnError_WhenUserAlreadyRegistered()
+    {
+        // Arrange
+        var request = new Request("test@email.com", "test", "test", "test", "test");
+
+        var command = new CreateUserCommand(_keycloakClient, _userRepository, _unitOfWork);
+
+        _userRepository.CheckIfExistsAsync("test@email.com", "test", CancellationToken.None)
+            .Returns(true);
+
+        // Act
+        var result = await command.Handle(request, CancellationToken.None);
+
+        // Assert
+        Assert.Equal(Errors.AlreadyRegistered, result.Error);
+    }
 }

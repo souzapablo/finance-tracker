@@ -345,6 +345,12 @@ namespace FinanceTracker.Api.Infra.Migrations
                 table: "users",
                 column: "email",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_username",
+                table: "users",
+                column: "username",
+                unique: true);
         }
 
         /// <inheritdoc />

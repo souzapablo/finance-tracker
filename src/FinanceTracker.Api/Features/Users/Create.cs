@@ -13,6 +13,11 @@ public class CreateUserCommand(
 {
     public async Task<Result<Guid>> Handle(Request command, CancellationToken cancellation)
     {
+        var userExists = await userRepository.CheckIfExistsAsync(command.Email, command.Username, cancellation);
+
+        if (userExists)
+            return Result<Guid>.Failure(Errors.AlreadyRegistered);
+
         var user = new User(command.Username, command.Email, command.FirstName, command.LastName);
 
         var result = await keycloakClient.CreateUserAsync(command, user.Id, cancellation);

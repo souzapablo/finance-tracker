@@ -515,6 +515,10 @@ namespace FinanceTracker.Api.Infra.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
 
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_username");
+
                     b.ToTable("users", (string)null);
                 });
 

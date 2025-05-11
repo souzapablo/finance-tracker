@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FinanceTracker.Api.Infra.Migrations
 {
     [DbContext(typeof(FinanceTrackerDbContext))]
-    [Migration("20250511130439_InitialMigration")]
+    [Migration("20250511153004_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -517,6 +517,10 @@ namespace FinanceTracker.Api.Infra.Migrations
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_username");
 
                     b.ToTable("users", (string)null);
                 });
