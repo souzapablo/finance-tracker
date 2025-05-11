@@ -1,8 +1,6 @@
 ﻿using FinanceTracker.Api.Features.Accounts;
 using FinanceTracker.Api.Features.Users;
-using FinanceTracker.Api.Infra;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
-using FinanceTracker.Api.Infra.Contracts;
 using FinanceTracker.Api.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

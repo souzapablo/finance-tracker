@@ -11,7 +11,7 @@ public class CreateUserTests
     private readonly IKeycloakClient _keycloakClient = Substitute.For<IKeycloakClient>();
     private readonly IUnitOfWork _unitOfWork = Substitute.For<IUnitOfWork>();
 
-    [Fact]
+    [Fact(DisplayName = "Create new user")]
     public async Task ShouldCreateNewUser_WhenInputIsValid()
     {
         // Arrange
@@ -30,7 +30,7 @@ public class CreateUserTests
         Assert.NotEqual(Guid.Empty, result.Data);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Return external error when input is not valid")]
     public async Task ShouldReturnExternalError_WhenInputIsInvalid()
     {
         // Arrange

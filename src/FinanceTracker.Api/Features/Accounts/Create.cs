@@ -5,7 +5,7 @@ using FinanceTracker.Api.Infra.Data;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
-namespace FinanceTracker.Api.Features.Accounts;
+namespace FinanceTracker.Api.Features.Accounts.Create;
 
 public class Request
 {
@@ -29,7 +29,7 @@ public class CreateAccountCommand(
     }
 }
 
-public class CreateAccountEndpoint : IEndpoint
+public class CreateEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app) =>
         app.MapPost("", HandleAsync)
