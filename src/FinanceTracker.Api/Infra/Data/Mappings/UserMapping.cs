@@ -13,6 +13,9 @@ public class UserMapping : IEntityTypeConfiguration<User>
         builder.HasQueryFilter(u => !u.IsDeleted);
 
         builder.HasIndex(u => u.Email)
+            .IsUnique(); 
+        
+        builder.HasIndex(u => u.Username)
             .IsUnique();
     }
 }
