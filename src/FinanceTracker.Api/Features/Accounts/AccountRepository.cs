@@ -1,22 +1,15 @@
-﻿
-using Dapper;
-using FinanceTracker.Api.Infra.Contracts;
+﻿using FinanceTracker.Api.Infra.Data;
 
 namespace FinanceTracker.Api.Features.Accounts;
 
-public class AccountRepository(
-    ISqlConnectionFactory connectionFactory) : IAccountRepository
+public class AccountRepository(FinanceTrackerDbContext context)
+    : IAccountRepository
 {
-    public async Task<long> InsertAsync(Account account, CancellationToken cancellationToken)
-    {
-        using var connection = connectionFactory.CreateConnection();
+    public void Add(Account account) =>
+        context.Accounts.Add(account);
+}
 
-        var sql = @"INSERT INTO accounts (name, user_id, balance) 
-                    VALUES (@name, @userId, @balance)
-                    RETURNING Id;"
-        ;
-
-        var command = new CommandDefinition(sql, account, cancellationToken: cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(command);
-    }   
+public interface IAccountRepository
+{
+    void Add(Account account);  
 }

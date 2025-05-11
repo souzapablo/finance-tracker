@@ -9,9 +9,9 @@ public class Installment(
     int day,
     int number) : Entity
 {
-    public long? CardId { get; private set; }
+    public Guid? CardId { get; private set; }
     public Card? Card { get; private set; }
-    public long AccountId { get; private set; }
+    public Guid AccountId { get; private set; }
     public Account? Account { get; private set; }
     public decimal Amount { get; private set; } = amount;
     public string Description { get; private set; } = description;

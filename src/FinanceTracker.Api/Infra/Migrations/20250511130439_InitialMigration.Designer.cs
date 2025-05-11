@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FinanceTracker.Api.Infra.Migrations
 {
     [DbContext(typeof(FinanceTrackerDbContext))]
-    [Migration("20250511111734_InitialMigration")]
+    [Migration("20250511130439_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -27,23 +27,21 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Budget", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid?>("AccountId")
+                        .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric")
                         .HasColumnName("amount");
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -66,8 +64,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("remaining_amount");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -87,15 +85,13 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Card", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
                     b.Property<decimal>("AvailableLimit")
@@ -146,12 +142,10 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Category", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -184,8 +178,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("type");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -199,23 +193,21 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Installment", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric")
                         .HasColumnName("amount");
 
-                    b.Property<long?>("CardId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid?>("CardId")
+                        .HasColumnType("uuid")
                         .HasColumnName("card_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -257,15 +249,13 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Statement", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("CardId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("CardId")
+                        .HasColumnType("uuid")
                         .HasColumnName("card_id");
 
                     b.Property<DateTime>("ClosingDate")
@@ -319,23 +309,21 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Subscription", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric")
                         .HasColumnName("amount");
 
-                    b.Property<long>("CardId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("CardId")
+                        .HasColumnType("uuid")
                         .HasColumnName("card_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -377,23 +365,21 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Entities.Transaction", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric")
                         .HasColumnName("amount");
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
                     b.Property<DateTime>("CreatedAt")
@@ -417,8 +403,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_update");
 
-                    b.Property<long?>("StatementId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid?>("StatementId")
+                        .HasColumnType("uuid")
                         .HasColumnName("statement_id");
 
                     b.Property<int>("Type")
@@ -442,12 +428,10 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Features.Accounts.Account", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric")
@@ -470,8 +454,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -485,12 +469,10 @@ namespace FinanceTracker.Api.Infra.Migrations
 
             modelBuilder.Entity("FinanceTracker.Api.Features.Users.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")

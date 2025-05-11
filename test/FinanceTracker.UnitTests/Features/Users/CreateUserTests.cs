@@ -1,6 +1,7 @@
 ﻿using FinanceTracker.Api.Common.Base;
 using FinanceTracker.Api.Features.Users;
 using FinanceTracker.Api.Infra.Clients.Keycloak;
+using FinanceTracker.Api.Infra.Data;
 using NSubstitute;
 
 namespace FinanceTracker.UnitTests.Features.Users;
@@ -8,6 +9,7 @@ public class CreateUserTests
 {
     private readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
     private readonly IKeycloakClient _keycloakClient = Substitute.For<IKeycloakClient>();
+    private readonly IUnitOfWork _unitOfWork = Substitute.For<IUnitOfWork>();
 
     [Fact]
     public async Task ShouldCreateNewUser_WhenInputIsValid()
@@ -15,19 +17,17 @@ public class CreateUserTests
         // Arrange
         var request = new Request("test@email.com", "test", "test", "test", "test");
 
-        var command = new CreateUserCommand(_keycloakClient, _userRepository);
+        var command = new CreateUserCommand(_keycloakClient, _userRepository, _unitOfWork);
 
-        _userRepository.InsertAsync(Arg.Any<User>(), CancellationToken.None)
-            .Returns(1);
-
-        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<long>(), CancellationToken.None)
+        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<Guid>(), CancellationToken.None)
             .Returns(Result<string>.Success(Guid.NewGuid().ToString()));
 
         // Act
         var result = await command.Handle(request, CancellationToken.None);
 
         // Assert
-        Assert.Equal(1, result.Data);
+        Assert.True(result.IsSuccess);
+        Assert.NotEqual(Guid.Empty, result.Data);
     }
 
     [Fact]
@@ -36,9 +36,9 @@ public class CreateUserTests
         // Arrange
         var request = new Request("test@email.com", "test", "test", "test", "test");
 
-        var command = new CreateUserCommand(_keycloakClient, _userRepository);
+        var command = new CreateUserCommand(_keycloakClient, _userRepository, _unitOfWork);
 
-        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<long>(), CancellationToken.None)
+        _keycloakClient.CreateUserAsync(Arg.Any<Request>(), Arg.Any<Guid>(), CancellationToken.None)
             .Returns(Result<string>.Failure(Error.ExternalError("External error message")));
 
         // Act

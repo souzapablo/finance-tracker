@@ -11,7 +11,7 @@ public class Statement(
     int year, 
     int month) : Entity
 {
-    public long CardId { get; private set; }
+    public Guid CardId { get; private set; }
     public Card Card { get; private set; } = null!;
     public DateTime ClosingDate { get; private set; } = closingDate;
     public DateTime DueDate { get; private set; } = dueDate;

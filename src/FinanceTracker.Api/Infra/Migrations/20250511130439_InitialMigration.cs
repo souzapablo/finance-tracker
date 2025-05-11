@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,8 +15,7 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     external_id = table.Column<string>(type: "text", nullable: false),
                     username = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
@@ -36,9 +34,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "accounts",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     balance = table.Column<decimal>(type: "numeric", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -60,9 +57,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "categories",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     color = table.Column<string>(type: "text", nullable: false),
                     icon = table.Column<string>(type: "text", nullable: false),
@@ -86,9 +82,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "cards",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    account_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     brand = table.Column<int>(type: "integer", nullable: false),
                     limit = table.Column<decimal>(type: "numeric", nullable: false),
@@ -114,14 +109,13 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "budgets",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<long>(type: "bigint", nullable: false),
-                    category_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     amount = table.Column<decimal>(type: "numeric", nullable: false),
                     remaining_amount = table.Column<decimal>(type: "numeric", nullable: false),
                     month = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    account_id = table.Column<long>(type: "bigint", nullable: true),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     last_update = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -152,10 +146,9 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "installments",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    card_id = table.Column<long>(type: "bigint", nullable: true),
-                    account_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    card_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
                     amount = table.Column<decimal>(type: "numeric", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     day = table.Column<int>(type: "integer", nullable: false),
@@ -184,9 +177,8 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "statements",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    card_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    card_id = table.Column<Guid>(type: "uuid", nullable: false),
                     closing_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     due_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     total = table.Column<decimal>(type: "numeric", nullable: false),
@@ -213,10 +205,9 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "subscriptions",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    card_id = table.Column<long>(type: "bigint", nullable: false),
-                    account_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    card_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     amount = table.Column<decimal>(type: "numeric", nullable: false),
                     day = table.Column<int>(type: "integer", nullable: false),
@@ -246,11 +237,10 @@ namespace FinanceTracker.Api.Infra.Migrations
                 name: "transactions",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    account_id = table.Column<long>(type: "bigint", nullable: false),
-                    statement_id = table.Column<long>(type: "bigint", nullable: true),
-                    category_id = table.Column<long>(type: "bigint", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    account_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    statement_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     amount = table.Column<decimal>(type: "numeric", nullable: false),
                     date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

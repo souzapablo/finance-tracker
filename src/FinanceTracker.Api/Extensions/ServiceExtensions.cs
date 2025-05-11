@@ -14,11 +14,16 @@ public static class ServiceExtensions
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration.GetConnectionString("Postgres");
+        services.AddDbContext<FinanceTrackerDbContext>(cfg =>
+        {
+            cfg.UseNpgsql(connectionString)
+                .UseSnakeCaseNamingConvention();
+        });
+
         services.RegisterClients()
             .RegisterRepositories(configuration)
             .RegisterDocumentation(configuration);
-
-
 
         return services;
     }
@@ -37,15 +42,7 @@ public static class ServiceExtensions
 
     private static IServiceCollection RegisterRepositories(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Postgres");
-        services.AddDbContext<FinanceTrackerDbContext>(cfg =>
-        {
-            cfg.UseNpgsql(connectionString)
-                .UseSnakeCaseNamingConvention();
-        });
-
-        services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
-
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
 

@@ -13,7 +13,7 @@ public class KeycloakClient(
     IOptions<KeycloakOptions> options) : IKeycloakClient
 {
     private readonly KeycloakOptions _options = options.Value;
-    public async Task<Result<string>> CreateUserAsync(Request request, long userId, CancellationToken cancellationToken)
+    public async Task<Result<string>> CreateUserAsync(Request request, Guid userId, CancellationToken cancellationToken)
     {
         var user = new KeycloakUser
         {
