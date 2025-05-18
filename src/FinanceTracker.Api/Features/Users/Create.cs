@@ -50,7 +50,7 @@ public class CreateUserEndpoint : IEndpoint
         var result = await dispatcher.Dispatch<Request, Result<Guid>>(request, cancellationToken);
 
         if (!result.IsSuccess)
-            return Results.BadRequest(result.Error);
+            return Results.BadRequest(result);
 
         return Results.Created($"api/v1/users/{result.Data}", result);
     }
